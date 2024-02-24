@@ -16,7 +16,7 @@ from django.core.files.storage import Storage
 from django.conf import settings
 from django.utils.encoding import force_str, force_bytes
 from django.utils.deconstruct import deconstructible
-from django.utils.timezone import utc
+from datetime import timezone
 from tempfile import SpooledTemporaryFile
 
 import oss2.utils
@@ -174,7 +174,7 @@ class OssStorage(Storage):
         file_meta = self.get_file_meta(name)
 
         if settings.USE_TZ:
-            return datetime.utcfromtimestamp(file_meta.last_modified).replace(tzinfo=utc)
+            return datetime.utcfromtimestamp(file_meta.last_modified).replace(tzinfo=timezone.utc)
         else:
             return datetime.fromtimestamp(file_meta.last_modified)
 
